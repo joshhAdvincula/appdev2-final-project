@@ -11,7 +11,7 @@ class UserController extends Controller
      */
     public function index()
     {
-       user::all(); 
+       return user::all(); 
     }
 
     /**
@@ -19,6 +19,15 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'firstname' => 'required',
+            'lastname' => 'required',
+            'email' => 'required',
+            'password' => 'required'
+        ]);
+        // the error says does not have a default value so we need to validate
+        // the request base don sa mga field na need
+
         return user::create($request->all());
         //all request will inserted in users table
     }
@@ -28,15 +37,21 @@ class UserController extends Controller
      */
     public function show(string $id)
     {
-        //
+        return user::find($id);
+        //retur user by id
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the specified r  esource in storage.
      */
     public function update(Request $request, string $id)
     {
-        //
+        $user = user::find($id);
+        //first get the users
+        $user->update($request->all());
+        //next is update the user
+        return $user;
+        //then returm the updated user
     }
 
     /**
@@ -44,6 +59,12 @@ class UserController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        return user::destroy($id);
+    }
+
+    public function search($name){
+        return user::where('firstname', 'like', '%'.$name.'%')
+                    ->orWhere('lastname', 'like', '%'.$name.'%')
+                    ->get();
     }
 }

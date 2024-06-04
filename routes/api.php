@@ -4,7 +4,7 @@ use App\Http\Controllers\SubjectsController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
-
+use App\Http\Controllers\AuthController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -16,11 +16,27 @@ use App\Http\Controllers\UserController;
 |
 */
 Route::get('/users', [UserController::class, 'index']);
-
 Route::post('/users', [UserController::class, 'store']);
+Route::get('/users/{id}', [UserController::class, 'show']);
+Route::put('/users/{id}', [UserController::class, 'update']);
+//update the users
+Route::delete('/users/id', [UserController::class, 'destroy']);
+Route::get('/users/search/{name}', [UserController::class, 'search']);
+// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
 
-Route::get('/subjects', [SubjectsController::class, 'index']);
+//laravel sanctum use to protect this data
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::post('/register', [AuthController::class, 'register']);
+Route::post('/login', [AuthController::class, 'login']);
+
+
+Route::group(['middleware' => ['auth:sanctum']], function(){
+
+    Route::post('/users', [UserController::class, 'store']);
+    Route::put('/users/{id}', [UserController::class, 'update']);
+    //update the users
+    Route::delete('/users/id', [UserController::class, 'destroy']);
 });
+
