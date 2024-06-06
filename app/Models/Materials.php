@@ -10,19 +10,13 @@ class Materials extends Model
     use HasFactory;
 
     protected $fillable = [
+        'subjects_id',
         'title',
         'content',
-        'subjects_id',
-        'users_id',
     ];
 
     public function subject()
     {
         return $this->belongsTo(Subjects::class);
-    }
-
-    public function user()
-    {
-        return $this->belongsTo(User::class);
     }
 }

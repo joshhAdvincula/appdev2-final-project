@@ -18,13 +18,12 @@ class MaterialsFactory extends Factory
      *
      * @return array<string, mixed>
      */
-    public function definition(): array
+    public function definition()
     {
         return [
+            'subjects_id' => Subjects::factory(),
             'title' => $this->faker->sentence,
             'content' => $this->faker->paragraph,
-            'subjects_id' => Subjects::factory(),
-            'users_id' => User::factory(),
         ];
     }
 }

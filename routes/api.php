@@ -22,6 +22,8 @@ Route::put('/users/{id}', [UserController::class, 'update']);
 //update the users
 Route::delete('/users/id', [UserController::class, 'destroy']);
 Route::get('/users/search/{name}', [UserController::class, 'search']);
+
+
 // Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //     return $request->user();
 // });

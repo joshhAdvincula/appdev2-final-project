@@ -15,11 +15,11 @@ class AuthController extends Controller
     /**
      * Display a listing of the resource.
      */
-    // public function index()
-    // {
-    //      $users = User::all();
-    //     return response()->json($users);
-    // }
+    public function index()
+    {
+         $users = User::all();
+        return response()->json($users);
+    }
 
     /**
      * mag lalagay ng register
@@ -45,7 +45,7 @@ class AuthController extends Controller
         $token = $user->createToken('auth_token')->plainTextToken;
 
         return response()->json([
-            "firstname" => $user['firstname'],
+           // "firstname" => $user['firstname'],
             "access_token" => $token,
             "token_type" => "Bearer"
         ]);

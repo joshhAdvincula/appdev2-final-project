@@ -8,20 +8,19 @@ use App\Models\Subjects;
 
 class SubjectsSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
-    public function run(): void
+    public function run()
     {
         $subjects = [
-            ['name' => 'Math', 'description' => 'Mathematics subject'],
-            ['name' => 'Science', 'description' => 'Science subject'],
-            ['name' => 'History', 'description' => 'History subject'],
-            ['name' => 'English', 'description' => 'English subject'],
+            ['name' => 'Application Development', 'description' => 'Developing a different type of application with the use of technology'],
+            ['name' => 'Knowledge Audit', 'description' => 'Wise allocation of knowledge in the company'],
+            ['name' => 'Quanty Method', 'description' => 'simplex proble but has complexity in computation'],
+            ['name' => 'Christian Teaching', 'description' => 'Religions is the major concern'],
+            ['name' => 'Research Method', 'description' => 'Preparation for Capstone']
         ];
 
         foreach ($subjects as $subject) {
             Subjects::create($subject);
         }
     }
+
 }

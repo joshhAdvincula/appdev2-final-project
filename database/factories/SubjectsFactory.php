@@ -3,7 +3,7 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-
+use App\Models\Subjects;
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Subjects>
  */
@@ -14,10 +14,13 @@ class SubjectsFactory extends Factory
      *
      * @return array<string, mixed>
      */
-    public function definition(): array
+    protected $model = Subjects::class;
+
+    public function definition()
     {
         return [
-            //
+            'name' => $this->faker->word,
+            'description' => $this->faker->sentence,
         ];
     }
 }
