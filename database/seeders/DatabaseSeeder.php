@@ -16,12 +16,19 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
-        // Materials::factory(10)->create();
-        // Subjects::factory(10)->create();
-    //    User::factory()->create([
-    //         'name' => 'Test User',
-    //         'email' => 'test@example.com',
-    //     ]);
+        $this->call(SubjectsSeeder::class);  // Call the SubjectsSeeder
+
+        // Create users
+        User::factory(5)->create();
+
+        // Create materials with existing subjects and users
+        $subjects = Subjects::all();
+
+        foreach ($subjects as $subject) {
+            Materials::factory(5)->create([
+                'subjects_id' => $subject->id,
+                'users_id' => User::inRandomOrder()->first()->id,
+            ]);
+        }
     }
 }

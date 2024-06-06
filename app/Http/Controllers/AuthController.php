@@ -1,52 +1,78 @@
 <?php
 
 namespace App\Http\Controllers;
-use Illuminate\Http\Request;
-use illuminate\Support\Facades\Hash;
+
 use App\Models\User;
+use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
+
 
 
 class AuthController extends Controller
 {
-    public function register(Request $request)
-    {
-        $data = $request->validate([
-            'firstname' => 'required|string',
-            'lastname' => 'required|string',
-            'email' => 'required|string|unique:users,email',
-            'password' => 'required|string|confirmed'
-        ]);
-
-        $user = User::create([
-            'firstname' => $data['firstname'],
-            'lastname' => $data['lastname'],
-            'email' => $data['email'],
-            'password' => bcrypt($data['password'])
-        ]);
-
-        $token = $user->createToken('sanctum-token')->plainTextToken;
-
-        $response = [
-            'user' => $user,
-            'token' => $token
-        ];
-
-        return response($response, 201);
-    }
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
-        //
-    }
+    // public function index()
+    // {
+    //      $users = User::all();
+    //     return response()->json($users);
+    // }
 
     /**
-     * Store a newly created resource in storage.
+     * mag lalagay ng register
      */
-    public function store(Request $request)
+    public function register(Request $request)
     {
         //
+        $request->validate([
+            'firstname'=> 'required|string|max:20',
+            'lastname'=> 'required|string|max:20',
+            'email'=> 'required|string|email|unique:users',
+            'password'=> 'required|string|min:8|confirmed'
+        ]);
+
+        $user= User::create([
+            //after the validation
+            'firstname'=> $request->firstname,
+            'lastname'=> $request->lastname,
+            'email'=> $request->email,
+            'password'=> Hash::make($request->password)
+        ]);
+
+        $token = $user->createToken('auth_token')->plainTextToken;
+
+        return response()->json([
+            "firstname" => $user['firstname'],
+            "access_token" => $token,
+            "token_type" => "Bearer"
+        ]);
+    }
+
+    public function login(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|string|email',
+            'password' => 'required|string',
+        ]);
+        
+
+        if (Auth::attempt($request->only('email', 'password'))) {
+            // if Authen tication is sucessfull
+            $user = Auth::user();
+            //generate token
+            $token = $user->createToken('auth_token')->plainTextToken;
+
+            return response()->json([
+                "access_token" => $token,
+                "token_type" => "Bearer"
+            ], 200);
+        } else {
+            // if Authentication failed
+            return response()->json(['error' => 'sino ka boi'], 401);
+        }
     }
 
     /**
@@ -60,16 +86,17 @@ class AuthController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function logout(Request $request)
     {
         //
+        $request->user()->currentAccessToken()->delete();
+
+        return response()->json([
+            "message" => "logout kana boi"
+        ]);
     }
 }

@@ -8,4 +8,14 @@ use Illuminate\Database\Eloquent\Model;
 class Subjects extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'title',
+        'description',
+    ];
+
+    public function materials()
+    {
+        return $this->hasMany(Materials::class);
+    }
 }

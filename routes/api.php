@@ -28,15 +28,16 @@ Route::get('/users/search/{name}', [UserController::class, 'search']);
 
 //laravel sanctum use to protect this data
 
-Route::post('/register', [AuthController::class, 'register']);
-Route::post('/login', [AuthController::class, 'login']);
+
+// Route::group(['middleware' => ['auth:sanctum']], function(){
+
+//     Route::post('/users', [UserController::class, 'store']);
+//     Route::put('/users/{id}', [UserController::class, 'update']);
+//     //update the users
+//     Route::delete('/users/id', [UserController::class, 'destroy']);
+// });
 
 
-Route::group(['middleware' => ['auth:sanctum']], function(){
-
-    Route::post('/users', [UserController::class, 'store']);
-    Route::put('/users/{id}', [UserController::class, 'update']);
-    //update the users
-    Route::delete('/users/id', [UserController::class, 'destroy']);
-});
-
+Route::post("/register", [AuthController::class, "register"]);
+Route::post("/login", [AuthController::class, "login"]);
+Route::post("/logout", [AuthController::class, "logout"])->middleware('auth:sanctum');
