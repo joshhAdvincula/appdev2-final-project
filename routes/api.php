@@ -43,7 +43,6 @@ Route::post("/logout", [AuthController::class, "logout"])->middleware('auth:sanc
 Route::get('/users', [UserController::class, 'index']);
 Route::put('/users/{id}', [UserController::class, 'update']);
 Route::get('/users/{id}', [UserController::class, 'show']);
-Route::delete('/users/id', [UserController::class, 'destroy']);
-Route::get('/users/search/{name}', [AuthController::class, 'search']);
-
+Route::delete('/users/{id}', [UserController::class, 'destroy']);
+Route::get('/users/search/{name}', [UserController::class, 'search']);
 //\\Route::apiResource('users', AuthController::class);
