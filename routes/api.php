@@ -1,10 +1,11 @@
 <?php
 
-use App\Http\Controllers\SubjectsController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\SubjectsController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -45,4 +46,5 @@ Route::put('/users/{id}', [UserController::class, 'update']);
 Route::get('/users/{id}', [UserController::class, 'show']);
 Route::delete('/users/{id}', [UserController::class, 'destroy']);
 Route::get('/users/search/{name}', [UserController::class, 'search']);
-//\\Route::apiResource('users', AuthController::class);
+
+Route::get('/subjects', [SubjectsController::class, 'index']);
