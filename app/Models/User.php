@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use App\Models\Materials;
 
 class User extends Authenticatable
 {
@@ -25,6 +26,10 @@ class User extends Authenticatable
 
 
     ];
+    public function materials()
+    {
+        return $this->hasMany(Materials::class, 'users_id');
+    }
 
     /**
      * The attributes that should be hidden for serialization.

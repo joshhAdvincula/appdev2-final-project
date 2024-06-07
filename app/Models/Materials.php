@@ -11,12 +11,20 @@ class Materials extends Model
 
     protected $fillable = [
         'subjects_id',
+        'users_id',
         'title',
         'content',
     ];
-
+    //inverse
     public function subject()
     {
-        return $this->belongsTo(Subjects::class);
+        return $this->belongsTo(Subjects::class, 'subjects_id');
     }
+
+    //relationship with the users
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'users_id');
+    }
+
 }

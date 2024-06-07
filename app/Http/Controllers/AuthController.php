@@ -12,15 +12,7 @@ use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-         $users = User::all();
-        return response()->json($users);
-    }
-
+    
     /**
      * mag lalagay ng register
      */
@@ -46,8 +38,10 @@ class AuthController extends Controller
 
         return response()->json([
            // "firstname" => $user['firstname'],
+            "message" => "Successfully registered",
             "access_token" => $token,
             "token_type" => "Bearer"
+            
         ]);
     }
 
@@ -66,37 +60,35 @@ class AuthController extends Controller
             $token = $user->createToken('auth_token')->plainTextToken;
 
             return response()->json([
+                "message" => "Welcome po",
                 "access_token" => $token,
                 "token_type" => "Bearer"
             ], 200);
         } else {
             // if Authentication failed
-            return response()->json(['error' => 'sino ka boi'], 401);
+            return response()->json(['error' => 'User Anauthenticated'], 401);
         }
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-
-    /**
-     * Remove the specified resource from storage.
-     */
     public function logout(Request $request)
     {
         //
         $request->user()->currentAccessToken()->delete();
 
         return response()->json([
-            "message" => "logout kana boi"
+            "message" => "Successfully logged out"
         ]);
     }
+
+    /**
+     * Display a listing of the resource.
+     */
+   
+
+    /**
+     * Update the specified r  esource in storage.
+     */
+    
+
+   
 }

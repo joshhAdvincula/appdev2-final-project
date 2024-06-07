@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany as RelationsHasMany;
 
 class Subjects extends Model
 {
@@ -14,7 +15,7 @@ class Subjects extends Model
         'description',
     ];
 
-    public function materials()
+    public function materials(): RelationsHasMany
     {
         return $this->hasMany(Materials::class);
     }
