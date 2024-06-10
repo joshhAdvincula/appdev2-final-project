@@ -20,16 +20,16 @@ class AuthController extends Controller
     {
         //
         $request->validate([
-            'firstname'=> 'required|string|max:20',
-            'lastname'=> 'required|string|max:20',
+            'FirstName'=> 'required|string|max:20',
+            'LastName'=> 'required|string|max:20',
             'email'=> 'required|string|email|unique:users',
             'password'=> 'required|string|min:8|confirmed'
         ]);
 
         $user= User::create([
             //after the validation
-            'firstname'=> $request->firstname,
-            'lastname'=> $request->lastname,
+            'FirstName'=> $request->FirstName,
+            'LastName'=> $request->LastName,
             'email'=> $request->email,
             'password'=> Hash::make($request->password)
         ]);
@@ -79,16 +79,6 @@ class AuthController extends Controller
             "message" => "Successfully logged out"
         ]);
     }
-
-    /**
-     * Display a listing of the resource.
-     */
-   
-
-    /**
-     * Update the specified r  esource in storage.
-     */
-    
 
    
 }

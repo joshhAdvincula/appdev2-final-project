@@ -28,14 +28,7 @@ class UserController extends Controller
     {
         $users = User::find($id);
         $users->update($request->all());
-        return $users;
-        // if (!$user) {
-        //     return response()->json(['message' => 'User not found'], 404);
-        // } 
-    
-        // $user->update($request->all());
-    
-        // return response()->json(['message' => 'User updated successfully', 'user' => $user]);
+        return response()->json(['message' => 'User updated successfully', 'user' => $users]);
     
     }
      /**
@@ -49,8 +42,8 @@ class UserController extends Controller
 
     public function search($name)
     {
-        $users = User::where('firstname', 'like', "%$name%")
-                     ->orWhere('lastname', 'like', "%$name%")
+        $users = User::where('FirstName', 'like', "%$name%")
+                     ->orWhere('LastName', 'like', "%$name%")
                      ->get();
 
         return response()->json($users);
