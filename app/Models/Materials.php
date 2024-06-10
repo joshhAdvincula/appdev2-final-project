@@ -15,16 +15,18 @@ class Materials extends Model
         'title',
         'content',
     ];
-    //inverse
-    public function subject()
-    {
-        return $this->belongsTo(Subjects::class, 'subjects_id');
-    }
+    
 
     //relationship with the users
     public function user()
     {
         return $this->belongsTo(User::class, 'users_id');
+    }
+
+    //inverse
+    public function subject()
+    {
+        return $this->belongsTo(Subjects::class, 'subjects_id');
     }
 
 }

@@ -15,6 +15,11 @@ class Subjects extends Model
         'description',
     ];
 
+    public function users()
+    {
+        return $this->belongsToMany(User::class, 'materials', 'subjects_id', 'users_id');
+    }
+
     public function materials(): RelationsHasMany
     {
         return $this->hasMany(Materials::class);

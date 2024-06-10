@@ -17,8 +17,8 @@ class SubjectsController extends Controller
     }
 
     public function show($id)
-    {
-        // Retrieve a subject and its materials
+    {   
+       // Retrieve a subject and its materials
         $subject = Subjects::with('materials')->findOrFail($id);
         return response()->json($subject);
     }

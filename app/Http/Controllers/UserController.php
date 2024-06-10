@@ -13,6 +13,17 @@ class UserController extends Controller
     {
          $users = User::all();
         return response()->json($users);
+
+        // Fetch the user with their materials and subjects
+    }
+    
+    public function getUserWithSubjects()
+    {
+             // Fetch users along with their materials and associated subjects
+             $users = User::with('materials.subject')->get();
+
+             // Return the users with their associated subjects
+             return response()->json($users);
     }
 
     /**
@@ -20,8 +31,17 @@ class UserController extends Controller
      */
     public function show(string $id)
     {
-        return user::find($id);
-        //retur user by id
+        // Fetch the user with their materials
+        
+        $user = User::find($id);
+
+    if (!$user) {
+        return response()->json(['message' => 'User not found'], 404);
+    }
+
+    // Return the user
+    return response()->json($user);
+
     }
 
    public function update(Request $request, string $id)
@@ -37,7 +57,16 @@ class UserController extends Controller
 
     public function destroy(string $id)
     {
-        return user::destroy($id);
+        $deleted = user::destroy($id);
+        
+        if ($deleted){
+            return response()->json(['message' => 'User Deleted Successfully', 'user' => $id]);
+
+        }else{
+            return response()->json(['message' => 'User Not Found', 'user' => $id], 404);
+
+        }
+
     }
 
     public function search($name)
