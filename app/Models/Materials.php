@@ -18,13 +18,13 @@ class Materials extends Model
     
 
     //relationship with the users
-    public function user()
-    {
-        return $this->belongsTo(User::class, 'users_id');
-    }
+    // public function user()
+    // {
+    //     return $this->belongsTo(User::class, 'users_id');
+    // }
 
     //inverse
-    public function subject()
+    public function subjects()
     {
         return $this->belongsTo(Subjects::class, 'subjects_id');
     }

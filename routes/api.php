@@ -46,7 +46,8 @@ Route::put('/users/{id}', [UserController::class, 'update']);
 Route::get('/users/{id}', [UserController::class, 'show']);
 Route::delete('/users/{id}', [UserController::class, 'destroy']);
 Route::get('/users/search/{name}', [UserController::class, 'search']);
-Route::get('/user_with_subjects', [UserController::class, 'getUserWithSubjects']);
+
+Route::get('/user/{id}/subjects-materials', [UserController::class, 'getUserWithSubjectsAndMaterials']);
 
 Route::get('/subjects', [SubjectsController::class, 'index']);
 

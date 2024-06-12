@@ -26,13 +26,10 @@ class User extends Authenticatable
 
 
     ];
+    
     public function subjects()
     {
-        return $this->belongsToMany(Subjects::class, 'materials', 'users_id', 'subjects_id');
-    }
-    public function materials()
-    {
-        return $this->hasMany(Materials::class, 'users_id');
+        return $this->hasOne(Subjects::class);
     }
 
     /**

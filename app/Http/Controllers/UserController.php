@@ -16,16 +16,6 @@ class UserController extends Controller
 
         // Fetch the user with their materials and subjects
     }
-    
-    public function getUserWithSubjects()
-    {
-             // Fetch users along with their materials and associated subjects
-             $users = User::with('materials.subject')->get();
-
-             // Return the users with their associated subjects
-             return response()->json($users);
-    }
-
     /**
      * Display the specified resource.
      */
@@ -77,4 +67,23 @@ class UserController extends Controller
 
         return response()->json($users);
     }
+
+    public function getUserWithSubjectsAndMaterials($id)
+    {
+        $user = User::with('subjects.material')->find($id);
+        
+        if (!$user) {
+            return response()->json(['message' => 'User not found'], 404);
+        }
+    
+        return response()->json($user);
+    }
 }
+
+
+/*
+ User has many Subjects.
+Subject belongs to a User and has one Material.
+Material belongs to a Subject.
+
+*/
