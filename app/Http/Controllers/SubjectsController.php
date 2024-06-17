@@ -32,10 +32,19 @@ class SubjectsController extends Controller
 
     public function update(Request $request, $id)
     {
-        // Update a subject
-        $subject = Subjects::findOrFail($id);
-        $subject->update($request->all());
-        return response()->json($subject);
+        //update a subject
+         // Find the subject
+         $subject = Subjects::findOrFail($id);
+
+         // Update the subject's name and description
+         $subject->name = $request->input('name');
+         $subject->description = $request->input('description');
+ 
+         // Save the changes
+         $subject->save();
+ 
+         // Return the updated subject as JSON
+         return response()->json($subject);
     }
 
     public function destroy($id)

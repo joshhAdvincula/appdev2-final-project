@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\SubjectsController;
+use App\Http\Controllers\UserSubjectController;
+use App\Http\Controllers\MaterialsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,39 +18,31 @@ use App\Http\Controllers\SubjectsController;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
-
-
-
-
 // Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //     return $request->user();
 // });
 
 //laravel sanctum use to protect this data
 
-
-// Route::group(['middleware' => ['auth:sanctum']], function(){
-
-//     Route::post('/users', [UserController::class, 'store']);
-//     Route::put('/users/{id}', [UserController::class, 'update']);
-//     //update the users
-//     Route::delete('/users/id', [UserController::class, 'destroy']);
-// });
-
-
 Route::post("/register", [AuthController::class, "register"]);
 Route::post("/login", [AuthController::class, "login"]);
 Route::post("/logout", [AuthController::class, "logout"])->middleware('auth:sanctum');
 
+//user Routes
+Route::prefix('users')->group(function () {
+    Route::get('/', [UserController::class, 'index']);
+    Route::get('/{id}', [UserController::class, 'show']);
+    Route::put('/{id}', [UserController::class, 'update']);
+    Route::delete('/{id}', [UserController::class, 'destroy']);
+    Route::get('/search/{name}', [UserController::class, 'search']);
+});
 
-Route::get('/users', [UserController::class, 'index']);
-Route::put('/users/{id}', [UserController::class, 'update']);
-Route::get('/users/{id}', [UserController::class, 'show']);
-Route::delete('/users/{id}', [UserController::class, 'destroy']);
-Route::get('/users/search/{name}', [UserController::class, 'search']);
+Route::get('/user/{id}/subjects-materials', [UserSubjectController::class, 'show']);
 
-Route::get('/user/{id}/subjects-materials', [UserController::class, 'getUserWithSubjectsAndMaterials']);
+Route::put('/material/{id}', [MaterialsController::class, 'update']);
+Route::get('/materials', [MaterialsController::class, 'index']);
 
 Route::get('/subjects', [SubjectsController::class, 'index']);
+Route::put('/subjects/{id}', [SubjectsController::class, 'update']);
 
 

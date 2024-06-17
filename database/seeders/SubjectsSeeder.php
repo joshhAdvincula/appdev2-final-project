@@ -21,15 +21,16 @@ class SubjectsSeeder extends Seeder
             ['name' => 'Research Method', 'description' => 'Preparation for Capstone'],
         ];
 
-        foreach ($users as $user) {
-            foreach ($subjects as $subject) {
-                Subjects::create([
-                    'user_id' => $user->id,
-                    'name' => $subject['name'],
-                    'description' => $subject['description'],
-                ]);
-            }
+        foreach ($subjects as $index => $subject) {
+            $user = $users->get($index); // Get the user by index
+
+            Subjects::create([
+                'user_id' => $user->id,
+                'name' => $subject['name'],
+                'description' => $subject['description'],
+            ]);
         }
+
     }
 
 }
