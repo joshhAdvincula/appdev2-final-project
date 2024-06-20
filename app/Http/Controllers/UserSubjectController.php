@@ -12,7 +12,7 @@ class UserSubjectController extends Controller
      */
     public function index()
     {
-        //
+        
     }
 
     /**
